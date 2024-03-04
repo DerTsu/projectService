@@ -1,0 +1,8 @@
+cd{  
+   "basePackage":"co.com.ortega.microservice.resolveEnigmaApi",
+   "configPackage":"co.com.ortega.microservice.resolveEnigmaApi.config",
+   "apiPackage":"co.com.ortega.microservice.resolveEnigmaApi.api",
+   "modelPackage":"co.com.ortega.microservice.resolveEnigmaApi.model",
+   "groupId":"co.com.ortega.service.resolveEnigmaApi",
+   "artifactId":"resolve-enigma-api"
+}
