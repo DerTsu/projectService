@@ -1,0 +1,8 @@
+{  
+   "basePackage":"co.com.ortega3.microservice.resolveEnigmaApi",
+   "configPackage":"co.com.ortega3.microservice.resolveEnigmaApi.config",
+   "apiPackage":"co.com.ortega3.microservice.resolveEnigmaApi.api",
+   "modelPackage":"co.com.ortega3.microservice.resolveEnigmaApi.model",
+   "groupId":"co.com.ortega3.service.resolveEnigmaApi3",
+   "artifactId":"resolve-enigma-api3"
+}

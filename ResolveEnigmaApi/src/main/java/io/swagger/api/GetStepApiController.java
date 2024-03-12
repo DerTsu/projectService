@@ -1,5 +1,6 @@
 package io.swagger.api;
 
+import io.swagger.model.GetEnigmaStepResponse;
 import io.swagger.model.JsonApiBodyRequest;
 import io.swagger.model.JsonApiBodyResponseErrors;
 import io.swagger.model.JsonApiBodyResponseSuccess;
@@ -32,16 +33,48 @@ public class GetStepApiController implements GetStepApi {
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
-
+    
+    /* inicio actualizar */
+    private JsonApiBodyResponseSuccess response;
+    private List<JsonApiBodyResponseSuccess> listResponse;
+    private List<GetEnigmaStepResponse> enigmas;
+    private GetEnigmaStepResponse enigma;
+    /* final actualizar */
+    
     @org.springframework.beans.factory.annotation.Autowired
-    public GetStepApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    public GetStepApiController(ObjectMapper objectMapper, HttpServletRequest request, 
+    		
+    		/* inicio actualizar */
+    		List<GetEnigmaStepResponse> enigmas, 
+    		GetEnigmaStepResponse enigma,
+    		JsonApiBodyResponseSuccess response,
+    		List<JsonApiBodyResponseSuccess> listResponse
+    		/* final actualizar */
+    		
+    		) {
         this.objectMapper = objectMapper;
         this.request = request;
+        
+        /* inicio actualizar */
+        this.enigmas = enigmas;
+        this.enigma = enigma;
+        this.response = response;
+        this.listResponse = listResponse;
+        /* final actualizar */
+        
     }
 
     public ResponseEntity<List<JsonApiBodyResponseSuccess>> getStep(@ApiParam(value = "request body get enigma step" ,required=true )  @Valid @RequestBody JsonApiBodyRequest body) {
         String accept = request.getHeader("Accept");
-        return new ResponseEntity<List<JsonApiBodyResponseSuccess>>(HttpStatus.NOT_IMPLEMENTED);
+        
+        /* inicio actualizar */
+        enigma.setAnswer("Abrir el refrigerador");
+        enigmas.add(enigma);
+        response.setData(enigmas);
+        listResponse.add(response);
+        /* final actualizar */
+        
+        return new ResponseEntity<>(listResponse, HttpStatus.NOT_IMPLEMENTED);/*Aqui esta el error, toca solucionarlo*/
     }
 
 }
