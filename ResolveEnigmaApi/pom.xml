@@ -74,5 +74,10 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+        	<groupId>co.com.ortega1.service.resolveEnigmaApi1</groupId>
+        	<artifactId>resolve-enigma-api1</artifactId>
+        	<version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

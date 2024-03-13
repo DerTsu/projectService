@@ -1,11 +1,6 @@
 package io.swagger.api;
 
 import io.swagger.model.JsonApiBodyRequest;
-import io.swagger.model.JsonApiBodyResponseErrors;
-import io.swagger.model.JsonApiBodyResponseSuccess;
-
-import java.util.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,9 +22,8 @@ public class GetStepApiControllerIntegrationTest {
 
     @Test
     public void getStepTest() throws Exception {
-        JsonApiBodyRequest body = new JsonApiBodyRequest();
-        ResponseEntity<List<JsonApiBodyResponseSuccess>> responseEntity = api.getStep(body);
-        assertEquals(HttpStatus.NOT_IMPLEMENTED, responseEntity.getStatusCode());
+        ResponseEntity<String> responseEntity = api.getStepString();
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals("mensaje del servicio 1 mensaje del servicio 2 mensaje del servicio 3", responseEntity.getBody());
     }
-
 }

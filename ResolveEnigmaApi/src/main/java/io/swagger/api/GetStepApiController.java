@@ -1,80 +1,44 @@
 package io.swagger.api;
 
-import io.swagger.model.GetEnigmaStepResponse;
-import io.swagger.model.JsonApiBodyRequest;
-import io.swagger.model.JsonApiBodyResponseErrors;
-import io.swagger.model.JsonApiBodyResponseSuccess;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.client.RestTemplate;
 
-import javax.validation.constraints.*;
-import javax.validation.Valid;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-03-04T15:40:01.381-05:00[America/Bogota]")
+
 @Controller
 public class GetStepApiController implements GetStepApi {
 
-    private static final Logger log = LoggerFactory.getLogger(GetStepApiController.class);
+    public ResponseEntity<String> getStepString() {
+        RestTemplate restTemplate = new RestTemplate();
 
-    private final ObjectMapper objectMapper;
+        String service1Url = "http://localhost:8081/v1/getOneEnigma/getStepString";
+        String service2Url = "http://localhost:8082/v1/getOneEnigma/getStepString";
+        String service3Url = "http://localhost:8083/v1/getOneEnigma/getStepString";
 
-    private final HttpServletRequest request;
-    
-    /* inicio actualizar */
-    private JsonApiBodyResponseSuccess response;
-    private List<JsonApiBodyResponseSuccess> listResponse;
-    private List<GetEnigmaStepResponse> enigmas;
-    private GetEnigmaStepResponse enigma;
-    /* final actualizar */
-    
-    @org.springframework.beans.factory.annotation.Autowired
-    public GetStepApiController(ObjectMapper objectMapper, HttpServletRequest request, 
-    		
-    		/* inicio actualizar */
-    		List<GetEnigmaStepResponse> enigmas, 
-    		GetEnigmaStepResponse enigma,
-    		JsonApiBodyResponseSuccess response,
-    		List<JsonApiBodyResponseSuccess> listResponse
-    		/* final actualizar */
-    		
-    		) {
-        this.objectMapper = objectMapper;
-        this.request = request;
-        
-        /* inicio actualizar */
-        this.enigmas = enigmas;
-        this.enigma = enigma;
-        this.response = response;
-        this.listResponse = listResponse;
-        /* final actualizar */
-        
+        List<String> messages = new ArrayList<>();
+
+        messages.addAll(getMessageFromService(restTemplate, service1Url));
+        messages.addAll(getMessageFromService(restTemplate, service2Url));
+        messages.addAll(getMessageFromService(restTemplate, service3Url));
+
+        String concatenatedMessages = String.join(" ", messages);
+        return ResponseEntity.ok(concatenatedMessages);
     }
 
-    public ResponseEntity<List<JsonApiBodyResponseSuccess>> getStep(@ApiParam(value = "request body get enigma step" ,required=true )  @Valid @RequestBody JsonApiBodyRequest body) {
-        String accept = request.getHeader("Accept");
-        
-        /* inicio actualizar */
-        enigma.setAnswer("Abrir el refrigerador");
-        enigmas.add(enigma);
-        response.setData(enigmas);
-        listResponse.add(response);
-        /* final actualizar */
-        
-        return new ResponseEntity<>(listResponse, HttpStatus.NOT_IMPLEMENTED);/*Aqui esta el error, toca solucionarlo*/
-    }
+    private List<String> getMessageFromService(RestTemplate restTemplate, String url) {
+        List<String> messages = new ArrayList<>();
 
+        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            String message = response.getBody(); 
+            messages.add(message);
+        } else {
+            // Handle error properly
+        }
+
+        return messages;
+    }
 }

@@ -57,5 +57,14 @@ public class GetStepApiController implements GetStepApi {
         
         return new ResponseEntity<>(listResponse, HttpStatus.OK);
     }
+    
+    public ResponseEntity<String> getStepString() {
+    	try {
+            String accept = request.getHeader("Accept");
+            return new ResponseEntity<>("cerrar la puerta", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
